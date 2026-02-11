@@ -160,8 +160,7 @@ const tribeSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Indexes
-tribeSchema.index({ name: 1 });
+// Indexes (name already has unique index)
 tribeSchema.index({ tribeType: 1, category: 1 });
 tribeSchema.index({ 'location.university': 1 });
 tribeSchema.index({ tags: 1 });

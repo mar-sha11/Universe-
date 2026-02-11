@@ -177,9 +177,7 @@ const userSchema = new mongoose.Schema({
 // Create geospatial index for location-based queries
 userSchema.index({ location: '2dsphere' });
 
-// Index for faster queries
-userSchema.index({ email: 1 });
-userSchema.index({ phone: 1 });
+// Index for faster queries (email and phone already have unique indexes)
 userSchema.index({ userType: 1 });
 userSchema.index({ isVerified: 1 });
 
