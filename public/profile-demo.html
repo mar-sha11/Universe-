@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniVerse - Profile (Demo)</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/glassmorphism.css">
+</head>
+<body>
+  <nav class="sticky-nav">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span style="font-size: 1.8rem;">🌌</span>
+        <h1 style="margin: 0; font-size: 1.5rem;" class="gradient-text">UniVerse</h1>
+      </a>
+      <div class="nav-links">
+        <a href="/feed.html">Feed</a>
+        <a href="/chat.html">Messages</a>
+        <a href="/profile.html" class="active">Profile</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="app-container" style="padding-top: 2rem;">
+    <div class="glass-card" style="padding: 2.5rem; margin-bottom: 2rem;">
+      <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <div style="position: relative;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);">
+            JD
+          </div>
+          <div style="position: absolute; bottom: 0; right: 0; background: var(--marshlyte-gold); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);">
+            🛡️
+          </div>
+        </div>
+
+        <div style="flex: 1; min-width: 250px;">
+          <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 0.5rem;">
+            John Doe
+          </h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+            johndoe@university.edu.ng
+          </p>
+          
+          <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.25rem;">
+                Marshlyte Score
+              </div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: var(--neon-cyan);">
+                4.8
+              </div>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.25rem;">
+                Completed Jobs
+              </div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: var(--neon-purple);">
+                24
+              </div>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.25rem;">
+                Total Earnings
+              </div>
+              <div style="font-size: 1.8rem; font-weight: 700; color: var(--neon-cyan);">
+                ₦145,000
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-container" style="margin-bottom: 2rem;">
+      <button class="tab-btn active">My Posted Jobs</button>
+      <button class="tab-btn">My Applications</button>
+    </div>
+
+    <div style="display: grid; gap: 1.5rem;">
+      <div class="glass-card" style="padding: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+          <div>
+            <h3 style="color: var(--neon-cyan); margin-bottom: 0.5rem;">UI/UX Design for Mobile App</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">design • digital</p>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 1.3rem; font-weight: 700; color: var(--neon-purple);">₦25,000</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">3 applicants</div>
+          </div>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+          Need clean, modern UI/UX design for a student productivity app. Figma files required.
+        </p>
+        <div style="display: inline-block; padding: 0.5rem 1rem; background: rgba(0, 210, 255, 0.2); border-radius: var(--radius-sm); color: var(--neon-cyan); font-size: 0.85rem;">
+          Status: Open
+        </div>
+      </div>
+
+      <div class="glass-card" style="padding: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+          <div>
+            <h3 style="color: var(--neon-cyan); margin-bottom: 0.5rem;">Python Data Analysis Project</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">coding • digital</p>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 1.3rem; font-weight: 700; color: var(--neon-purple);">₦18,000</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">1 applicant</div>
+          </div>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+          Analyze student survey data and create visualizations using Python, Pandas, and Matplotlib.
+        </p>
+        <div style="display: inline-block; padding: 0.5rem 1rem; background: rgba(123, 47, 247, 0.2); border-radius: var(--radius-sm); color: var(--neon-purple); font-size: 0.85rem;">
+          Status: In Progress
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <p>Designed by <strong>MARSHLYTES LAB</strong></p>
+  </footer>
+</body>
+</html>

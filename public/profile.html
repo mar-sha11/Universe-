@@ -40,8 +40,8 @@
           <div id="userAvatar" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);">
             👤
           </div>
-          ${/* Marshlyte Badge */}
-          <div id="marshlyteBadge" style="display: none; position: absolute; bottom: 0; right: 0; background: var(--marshlyte-gold); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);">
+          <!-- Marshlyte Badge -->
+          <div id="marshlyteBadge" style="display: none; position: absolute; bottom: 0; right: 0; background: var(--marshlyte-gold); width: 40px; height: 40px; border-radius: 50%; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);">
             🛡️
           </div>
         </div>
@@ -102,7 +102,7 @@
         </div>
 
         <!-- Jobs List -->
-        <div id="postedJobsList" style="display: none; display: grid; gap: 1.5rem;">
+        <div id="postedJobsList" style="display: none; grid-template-columns: 1fr; gap: 1.5rem;">
           <!-- Jobs will be inserted here -->
         </div>
 
@@ -128,7 +128,7 @@
         </div>
 
         <!-- Applications List -->
-        <div id="applicationsList" style="display: none; display: grid; gap: 1.5rem;">
+        <div id="applicationsList" style="display: none; grid-template-columns: 1fr; gap: 1.5rem;">
           <!-- Applications will be inserted here -->
         </div>
 
