@@ -66,8 +66,9 @@ router.post('/signup', signupValidation, async (req, res) => {
     });
 
     // TODO: Send verification email or SMS
-    // For now, we'll just return the response
-    console.log(`📧 Verification token for ${email}: ${verificationToken}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`📧 [DEV ONLY] Verification token for ${email}: ${verificationToken}`);
+    }
 
     // Send token response
     sendTokenResponse(user, 201, res);

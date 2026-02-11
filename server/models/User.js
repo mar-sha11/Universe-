@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+// Cache bcrypt rounds for performance
+const BCRYPT_ROUNDS = parseInt(process.env.BCRYPT_ROUNDS) || 12;
+
 const userSchema = new mongoose.Schema({
   // Basic Information
   firstName: {
@@ -21,7 +24,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email']
+    match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please provide a valid email']
   },
   phone: {
     type: String,
@@ -192,8 +195,7 @@ userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   
   try {
-    const rounds = parseInt(process.env.BCRYPT_ROUNDS) || 12;
-    this.password = await bcrypt.hash(this.password, rounds);
+    this.password = await bcrypt.hash(this.password, BCRYPT_ROUNDS);
     next();
   } catch (error) {
     next(error);
