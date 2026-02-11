@@ -5,17 +5,21 @@
 
 /* CSS Variables */
 :root {
-  /* Deep Space Colors */
-  --primary-bg: #0f0f1e;
-  --secondary-bg: #1a1a2e;
-  --accent-purple: #8B5CF6;
-  --accent-blue: #3B82F6;
+  /* Deep Space Colors - Updated for new design system */
+  --primary-bg: #0f0c29;
+  --secondary-bg: #302b63;
+  --tertiary-bg: #24243e;
+  
+  /* Neon Accent Colors */
+  --neon-cyan: #00d2ff;
+  --neon-purple: #7b2ff7;
   --accent-pink: #EC4899;
   
   /* Glass Colors */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
   --glass-white: rgba(255, 255, 255, 0.1);
   --glass-dark: rgba(0, 0, 0, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.18);
   
   /* Text Colors */
   --text-primary: #ffffff;
@@ -35,7 +39,7 @@
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 20px;
+  --radius-lg: 16px;
   --radius-xl: 30px;
   
   /* Shadows */
@@ -45,7 +49,7 @@
   
   /* Blur */
   --blur-sm: 10px;
-  --blur-md: 20px;
+  --blur-md: 16px;
   --blur-lg: 40px;
 }
 
@@ -57,8 +61,8 @@
 }
 
 body {
-  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+  font-family: 'Segoe UI', 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.6;
@@ -66,7 +70,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Nebula Background Effect */
+/* Nebula Background Effect - Enhanced for new design */
 body::before {
   content: '';
   position: fixed;
@@ -75,9 +79,9 @@ body::before {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(ellipse at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 30%, rgba(0, 210, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(123, 47, 247, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
   pointer-events: none;
   z-index: -1;
 }
@@ -93,6 +97,14 @@ h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.5rem; }
 h4 { font-size: 1.25rem; }
+
+/* Gradient text effect for headings */
+.gradient-text, h1.gradient-text, h2.gradient-text, h3.gradient-text {
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
 p {
   margin-bottom: var(--spacing-sm);
@@ -419,6 +431,192 @@ section {
 
 /* Focus styles for keyboard navigation */
 *:focus-visible {
-  outline: 2px solid var(--accent-blue);
+  outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
+}
+
+/* Footer Styles */
+.app-footer {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  border-top: 1px solid var(--glass-border);
+  padding: var(--spacing-lg) var(--spacing-md);
+  text-align: center;
+  margin-top: var(--spacing-xl);
+}
+
+.app-footer p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.app-footer strong {
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Sticky Navigation */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  border-bottom: 1px solid var(--glass-border);
+  padding: var(--spacing-sm) 0;
+}
+
+.sticky-nav .nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sticky-nav .logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.sticky-nav .nav-links {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.sticky-nav .nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.sticky-nav .nav-links a:hover,
+.sticky-nav .nav-links a.active {
+  color: var(--neon-cyan);
+}
+
+/* Neon Button Styles */
+.btn-neon {
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-neon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 210, 255, 0.6), 0 0 40px rgba(123, 47, 247, 0.4);
+}
+
+.btn-neon:active {
+  transform: translateY(0);
+}
+
+/* Floating Input Styles */
+.floating-input {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+}
+
+.floating-input input,
+.floating-input textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--glass-border);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.floating-input input:focus,
+.floating-input textarea:focus {
+  outline: none;
+  border-bottom-color: var(--neon-cyan);
+}
+
+.floating-input label {
+  position: absolute;
+  left: 0;
+  top: var(--spacing-sm);
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.floating-input input:focus ~ label,
+.floating-input input:not(:placeholder-shown) ~ label,
+.floating-input textarea:focus ~ label,
+.floating-input textarea:not(:placeholder-shown) ~ label {
+  top: -20px;
+  font-size: 0.85rem;
+  color: var(--neon-cyan);
+}
+
+/* Tab Styles */
+.tab-container {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--glass-border);
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  color: var(--neon-cyan);
+  border-bottom-color: var(--neon-cyan);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Glass Card Updates for Design System */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
 }
