@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UniVerse - Marketplace Feed">
+  <meta name="theme-color" content="#0f0c29">
+  
+  <title>UniVerse - Marketplace</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/glassmorphism.css">
+</head>
+<body>
+  <!-- Sticky Navigation -->
+  <nav class="sticky-nav">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span class="logo-icon" style="font-size: 1.8rem;">🌌</span>
+        <h1 style="margin: 0; font-size: 1.5rem;" class="gradient-text">UniVerse</h1>
+      </a>
+      <div class="nav-links">
+        <a href="/feed.html" class="active">Feed</a>
+        <a href="/chat.html">Messages</a>
+        <a href="/profile.html">Profile</a>
+        <a href="#" id="logoutBtn">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="app-container" style="padding-top: 2rem;">
+    
+    <!-- Create Job Section -->
+    <div class="glass-card" style="margin-bottom: 2rem; padding: 1.5rem;">
+      <button id="toggleCreateJob" class="btn-neon" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+        <span>➕</span>
+        <span>Create New Job</span>
+      </button>
+      
+      <div id="createJobForm" style="display: none; margin-top: 2rem; animation: fadeIn 0.3s ease;">
+        <h3 class="gradient-text" style="margin-bottom: 1.5rem;">Post a New Gig</h3>
+        <form id="jobForm">
+          <div class="floating-input">
+            <input type="text" id="jobTitle" placeholder=" " required>
+            <label for="jobTitle">Job Title</label>
+          </div>
+
+          <div class="floating-input">
+            <textarea id="jobDescription" rows="4" placeholder=" " required style="resize: vertical;"></textarea>
+            <label for="jobDescription">Description</label>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="floating-input">
+              <select id="jobCategory" required style="background: transparent; color: var(--text-primary); border: none; border-bottom: 2px solid var(--glass-border); padding: var(--spacing-sm); width: 100%;">
+                <option value="">Select Category</option>
+                <option value="coding">Coding</option>
+                <option value="design">Design</option>
+                <option value="writing">Writing</option>
+                <option value="tutoring">Tutoring</option>
+                <option value="cleaning">Cleaning</option>
+                <option value="repairs">Repairs</option>
+                <option value="delivery">Delivery</option>
+                <option value="event_help">Event Help</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="floating-input">
+              <input type="number" id="jobBudget" placeholder=" " required min="100">
+              <label for="jobBudget">Budget (₦)</label>
+            </div>
+          </div>
+
+          <div class="floating-input">
+            <select id="jobType" required style="background: transparent; color: var(--text-primary); border: none; border-bottom: 2px solid var(--glass-border); padding: var(--spacing-sm); width: 100%;">
+              <option value="">Job Type</option>
+              <option value="digital">Digital</option>
+              <option value="physical">Physical</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn-neon" style="flex: 1;">Post Job</button>
+            <button type="button" id="cancelCreateJob" style="flex: 1; background: transparent; border: 2px solid var(--glass-border); color: var(--text-primary); border-radius: var(--radius-md); padding: var(--spacing-sm); cursor: pointer;">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Feed Container -->
+    <div id="feedContainer">
+      <h2 class="gradient-text" style="margin-bottom: 1.5rem;">Available Gigs</h2>
+      
+      <!-- Loading State -->
+      <div id="loadingJobs" class="glass-card" style="padding: 3rem; text-align: center;">
+        <div class="glass-spinner" style="margin: 0 auto 1rem;"></div>
+        <p>Loading jobs...</p>
+      </div>
+
+      <!-- Jobs List -->
+      <div id="jobsList" style="display: none; grid-template-columns: 1fr; gap: 1.5rem;">
+        <!-- Jobs will be inserted here -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" style="display: none;">
+        <div class="glass-card" style="padding: 3rem; text-align: center;">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">📭</div>
+          <h3 style="color: var(--text-secondary);">No jobs available yet</h3>
+          <p style="color: var(--text-muted);">Be the first to post a gig!</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>Designed by <strong>MARSHLYTES LAB</strong></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/config.js"></script>
+  <script>
+    // Check authentication
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      window.location.href = '/login.html';
+    }
+
+    // Toggle create job form
+    const toggleBtn = document.getElementById('toggleCreateJob');
+    const createJobForm = document.getElementById('createJobForm');
+    const cancelBtn = document.getElementById('cancelCreateJob');
+
+    toggleBtn.addEventListener('click', () => {
+      createJobForm.style.display = createJobForm.style.display === 'none' ? 'block' : 'none';
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      createJobForm.style.display = 'none';
+      document.getElementById('jobForm').reset();
+    });
+
+    // Create job handler
+    document.getElementById('jobForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const jobData = {
+        title: document.getElementById('jobTitle').value,
+        description: document.getElementById('jobDescription').value,
+        category: document.getElementById('jobCategory').value,
+        budget: parseInt(document.getElementById('jobBudget').value),
+        jobType: document.getElementById('jobType').value
+      };
+
+      try {
+        await CONFIG.api(CONFIG.ENDPOINTS.JOBS.CREATE, {
+          method: 'POST',
+          body: JSON.stringify(jobData)
+        });
+
+        // Reset form and hide
+        document.getElementById('jobForm').reset();
+        createJobForm.style.display = 'none';
+        
+        // Reload jobs
+        loadJobs();
+        
+        alert('Job posted successfully!');
+      } catch (error) {
+        alert('Failed to create job: ' + error.message);
+      }
+    });
+
+    // Load jobs
+    async function loadJobs() {
+      const loadingDiv = document.getElementById('loadingJobs');
+      const jobsList = document.getElementById('jobsList');
+      const emptyState = document.getElementById('emptyState');
+
+      loadingDiv.style.display = 'block';
+      jobsList.style.display = 'none';
+      emptyState.style.display = 'none';
+
+      try {
+        const response = await CONFIG.api(CONFIG.ENDPOINTS.JOBS.LIST);
+        const jobs = response.data || [];
+
+        loadingDiv.style.display = 'none';
+
+        if (jobs.length === 0) {
+          emptyState.style.display = 'block';
+          return;
+        }
+
+        jobsList.style.display = 'grid';
+        jobsList.innerHTML = jobs.map(job => createJobCard(job)).join('');
+      } catch (error) {
+        loadingDiv.style.display = 'none';
+        emptyState.style.display = 'block';
+        console.error('Failed to load jobs:', error);
+      }
+    }
+
+    // Create job card HTML
+    function createJobCard(job) {
+      return `
+        <div class="glass-card" style="padding: 1.5rem; transition: transform 0.3s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+            <div>
+              <h3 style="color: var(--neon-cyan); margin-bottom: 0.5rem;">${job.title}</h3>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">
+                ${job.category} • ${job.jobType}
+              </p>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 1.5rem; font-weight: 700; color: var(--neon-purple);">
+                ₦${job.budget.toLocaleString()}
+              </div>
+            </div>
+          </div>
+          
+          <p style="color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+            ${job.description}
+          </p>
+          
+          <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
+            ${job.client?.isMarshlyte ? '<span style="color: var(--marshlyte-gold);">🛡️ Verified</span>' : ''}
+            <span style="color: var(--text-muted); font-size: 0.85rem;">
+              Posted ${timeAgo(job.createdAt)}
+            </span>
+          </div>
+          
+          <button onclick="messageUser('${job._id}')" class="btn-neon" style="width: 100%; padding: 0.75rem;">
+            💬 Message
+          </button>
+        </div>
+      `;
+    }
+
+    // Helper: Time ago
+    function timeAgo(date) {
+      const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+      const intervals = {
+        year: 31536000,
+        month: 2592000,
+        week: 604800,
+        day: 86400,
+        hour: 3600,
+        minute: 60
+      };
+
+      for (const [unit, secondsInUnit] of Object.entries(intervals)) {
+        const interval = Math.floor(seconds / secondsInUnit);
+        if (interval >= 1) {
+          return `${interval} ${unit}${interval > 1 ? 's' : ''} ago`;
+        }
+      }
+      return 'just now';
+    }
+
+    // Message user
+    function messageUser(jobId) {
+      window.location.href = `/chat.html?job=${jobId}`;
+    }
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('authToken');
+      window.location.href = '/login.html';
+    });
+
+    // Load jobs on page load
+    loadJobs();
+  </script>
+</body>
+</html>

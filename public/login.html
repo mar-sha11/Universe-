@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UniVerse - Login or Sign Up">
+  <meta name="theme-color" content="#0f0c29">
+  
+  <title>UniVerse - Login</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/glassmorphism.css">
+</head>
+<body>
+  <!-- Sticky Navigation -->
+  <nav class="sticky-nav">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span class="logo-icon" style="font-size: 1.8rem;">🌌</span>
+        <h1 style="margin: 0; font-size: 1.5rem;" class="gradient-text">UniVerse</h1>
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/login.html" class="active">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="app-container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem;">
+    
+    <!-- Auth Card -->
+    <div class="glass-card" style="max-width: 500px; width: 100%; padding: 3rem 2.5rem;">
+      
+      <!-- Tabs -->
+      <div class="tab-container">
+        <button class="tab-btn active" data-tab="login">Log In</button>
+        <button class="tab-btn" data-tab="signup">Sign Up</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="login-tab" class="tab-content active">
+        <h2 class="gradient-text" style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
+        
+        <form id="loginForm">
+          <div class="floating-input">
+            <input type="email" id="loginEmail" name="email" placeholder=" " required>
+            <label for="loginEmail">Email Address</label>
+          </div>
+
+          <div class="floating-input">
+            <input type="password" id="loginPassword" name="password" placeholder=" " required>
+            <label for="loginPassword">Password</label>
+          </div>
+
+          <div id="loginError" style="color: #ff6b6b; margin-bottom: 1rem; display: none; text-align: center;"></div>
+
+          <button type="submit" class="btn-neon" style="width: 100%; margin-top: 1.5rem;">
+            Log In
+          </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted);">
+          <a href="#" style="color: var(--neon-cyan);">Forgot Password?</a>
+        </p>
+      </div>
+
+      <!-- Sign Up Form -->
+      <div id="signup-tab" class="tab-content">
+        <h2 class="gradient-text" style="text-align: center; margin-bottom: 2rem;">Join UniVerse</h2>
+        
+        <form id="signupForm">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="floating-input">
+              <input type="text" id="signupFirstName" name="firstName" placeholder=" " required>
+              <label for="signupFirstName">First Name</label>
+            </div>
+
+            <div class="floating-input">
+              <input type="text" id="signupLastName" name="lastName" placeholder=" " required>
+              <label for="signupLastName">Last Name</label>
+            </div>
+          </div>
+
+          <div class="floating-input">
+            <input type="email" id="signupEmail" name="email" placeholder=" " required>
+            <label for="signupEmail">Student Email (.edu)</label>
+          </div>
+
+          <div class="floating-input">
+            <input type="password" id="signupPassword" name="password" placeholder=" " required minlength="8">
+            <label for="signupPassword">Password (min 8 characters)</label>
+          </div>
+
+          <div class="floating-input">
+            <input type="text" id="signupUniversity" name="university" placeholder=" ">
+            <label for="signupUniversity">University (Optional)</label>
+          </div>
+
+          <div style="margin: 1.5rem 0;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="checkbox" required style="width: auto;">
+              <span style="color: var(--text-secondary); font-size: 0.9rem;">
+                I agree to the <a href="#" style="color: var(--neon-cyan);">Terms of Service</a>
+              </span>
+            </label>
+          </div>
+
+          <div id="signupError" style="color: #ff6b6b; margin-bottom: 1rem; display: none; text-align: center;"></div>
+          <div id="signupSuccess" style="color: #51cf66; margin-bottom: 1rem; display: none; text-align: center;"></div>
+
+          <button type="submit" class="btn-neon" style="width: 100%;">
+            Create Account
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>Designed by <strong>MARSHLYTES LAB</strong></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/config.js"></script>
+  <script>
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabName = btn.dataset.tab;
+        
+        // Update buttons
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Update content
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+      });
+    });
+
+    // Login Form Handler
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const errorDiv = document.getElementById('loginError');
+      errorDiv.style.display = 'none';
+      
+      const formData = {
+        email: document.getElementById('loginEmail').value,
+        password: document.getElementById('loginPassword').value
+      };
+
+      try {
+        const data = await CONFIG.api(CONFIG.ENDPOINTS.AUTH.LOGIN, {
+          method: 'POST',
+          body: JSON.stringify(formData)
+        });
+
+        // Store token
+        localStorage.setItem('authToken', data.token);
+        
+        // Redirect to feed
+        window.location.href = '/feed.html';
+      } catch (error) {
+        errorDiv.textContent = error.message || 'Login failed. Please try again.';
+        errorDiv.style.display = 'block';
+      }
+    });
+
+    // Signup Form Handler
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const errorDiv = document.getElementById('signupError');
+      const successDiv = document.getElementById('signupSuccess');
+      errorDiv.style.display = 'none';
+      successDiv.style.display = 'none';
+      
+      const formData = {
+        firstName: document.getElementById('signupFirstName').value,
+        lastName: document.getElementById('signupLastName').value,
+        email: document.getElementById('signupEmail').value,
+        password: document.getElementById('signupPassword').value,
+        university: document.getElementById('signupUniversity').value || undefined
+      };
+
+      try {
+        const data = await CONFIG.api(CONFIG.ENDPOINTS.AUTH.SIGNUP, {
+          method: 'POST',
+          body: JSON.stringify(formData)
+        });
+
+        // Store token
+        localStorage.setItem('authToken', data.token);
+        
+        // Show success message
+        successDiv.textContent = 'Account created successfully! Redirecting...';
+        successDiv.style.display = 'block';
+        
+        // Redirect to feed after 2 seconds
+        setTimeout(() => {
+          window.location.href = '/feed.html';
+        }, 2000);
+      } catch (error) {
+        errorDiv.textContent = error.message || 'Signup failed. Please try again.';
+        errorDiv.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

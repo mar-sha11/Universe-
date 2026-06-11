@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UniVerse - Your Profile">
+  <meta name="theme-color" content="#0f0c29">
+  
+  <title>UniVerse - Profile</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/glassmorphism.css">
+</head>
+<body>
+  <!-- Sticky Navigation -->
+  <nav class="sticky-nav">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span class="logo-icon" style="font-size: 1.8rem;">🌌</span>
+        <h1 style="margin: 0; font-size: 1.5rem;" class="gradient-text">UniVerse</h1>
+      </a>
+      <div class="nav-links">
+        <a href="/feed.html">Feed</a>
+        <a href="/chat.html">Messages</a>
+        <a href="/profile.html" class="active">Profile</a>
+        <a href="#" id="logoutBtn">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="app-container" style="padding-top: 2rem;">
+    
+    <!-- Profile Header -->
+    <div class="glass-card" style="padding: 2.5rem; margin-bottom: 2rem;">
+      <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <!-- Avatar -->
+        <div style="position: relative;">
+          <div id="userAvatar" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);">
+            👤
+          </div>
+          <!-- Marshlyte Badge -->
+          <div id="marshlyteBadge" style="display: none; position: absolute; bottom: 0; right: 0; background: var(--marshlyte-gold); width: 40px; height: 40px; border-radius: 50%; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);">
+            🛡️
+          </div>
+        </div>
+
+        <!-- User Info -->
+        <div style="flex: 1; min-width: 250px;">
+          <h2 id="userName" class="gradient-text" style="font-size: 2rem; margin-bottom: 0.5rem;">
+            Loading...
+          </h2>
+          <p id="userEmail" style="color: var(--text-secondary); margin-bottom: 1rem;">
+            -
+          </p>
+          
+          <!-- Marshlyte Score -->
+          <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.25rem;">
+                Marshlyte Score
+              </div>
+              <div id="userRating" style="font-size: 1.8rem; font-weight: 700; color: var(--neon-cyan);">
+                0.0
+              </div>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.25rem;">
+                Completed Jobs
+              </div>
+              <div id="completedJobs" style="font-size: 1.8rem; font-weight: 700; color: var(--neon-purple);">
+                0
+              </div>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.25rem;">
+                Total Earnings
+              </div>
+              <div id="totalEarnings" style="font-size: 1.8rem; font-weight: 700; color: var(--neon-cyan);">
+                ₦0
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-container" style="margin-bottom: 2rem;">
+      <button class="tab-btn active" data-tab="posted">My Posted Jobs</button>
+      <button class="tab-btn" data-tab="applications">My Applications</button>
+    </div>
+
+    <!-- My Posted Jobs Tab -->
+    <div id="posted-tab" class="tab-content active">
+      <div id="postedJobsContainer">
+        <!-- Loading State -->
+        <div id="loadingPosted" class="glass-card" style="padding: 3rem; text-align: center;">
+          <div class="glass-spinner" style="margin: 0 auto 1rem;"></div>
+          <p>Loading your jobs...</p>
+        </div>
+
+        <!-- Jobs List -->
+        <div id="postedJobsList" style="display: none; grid-template-columns: 1fr; gap: 1.5rem;">
+          <!-- Jobs will be inserted here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyPosted" style="display: none;">
+          <div class="glass-card" style="padding: 3rem; text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">📝</div>
+            <h3 style="color: var(--text-secondary);">No jobs posted yet</h3>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Start posting gigs to earn!</p>
+            <a href="/feed.html" class="btn-neon">Post Your First Job</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Applications Tab -->
+    <div id="applications-tab" class="tab-content">
+      <div id="applicationsContainer">
+        <!-- Loading State -->
+        <div id="loadingApplications" class="glass-card" style="padding: 3rem; text-align: center;">
+          <div class="glass-spinner" style="margin: 0 auto 1rem;"></div>
+          <p>Loading your applications...</p>
+        </div>
+
+        <!-- Applications List -->
+        <div id="applicationsList" style="display: none; grid-template-columns: 1fr; gap: 1.5rem;">
+          <!-- Applications will be inserted here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyApplications" style="display: none;">
+          <div class="glass-card" style="padding: 3rem; text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎯</div>
+            <h3 style="color: var(--text-secondary);">No applications yet</h3>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Browse the marketplace to find gigs!</p>
+            <a href="/feed.html" class="btn-neon">Browse Jobs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>Designed by <strong>MARSHLYTES LAB</strong></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/config.js"></script>
+  <script>
+    // Check authentication
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      window.location.href = '/login.html';
+    }
+
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabName = btn.dataset.tab;
+        
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+      });
+    });
+
+    // Load user profile
+    async function loadProfile() {
+      try {
+        const response = await CONFIG.api(CONFIG.ENDPOINTS.AUTH.ME);
+        const user = response.data;
+
+        // Update profile info
+        document.getElementById('userName').textContent = `${user.firstName} ${user.lastName}`;
+        document.getElementById('userEmail').textContent = user.email;
+        document.getElementById('userRating').textContent = user.rating ? user.rating.toFixed(1) : '0.0';
+        document.getElementById('completedJobs').textContent = user.completedJobs || 0;
+        document.getElementById('totalEarnings').textContent = `₦${(user.totalEarnings || 0).toLocaleString()}`;
+
+        // Show Marshlyte badge if verified
+        if (user.isMarshlyte) {
+          document.getElementById('marshlyteBadge').style.display = 'flex';
+        }
+
+        // Show initials in avatar if no image
+        if (!user.avatar || user.avatar.includes('default')) {
+          const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
+          document.getElementById('userAvatar').textContent = initials;
+        }
+
+      } catch (error) {
+        console.error('Failed to load profile:', error);
+        alert('Failed to load profile data');
+      }
+    }
+
+    // Load posted jobs
+    async function loadPostedJobs() {
+      // For now, show empty state as we don't have the endpoint implemented
+      document.getElementById('loadingPosted').style.display = 'none';
+      document.getElementById('emptyPosted').style.display = 'block';
+    }
+
+    // Load applications
+    async function loadApplications() {
+      // For now, show empty state as we don't have the endpoint implemented
+      document.getElementById('loadingApplications').style.display = 'none';
+      document.getElementById('emptyApplications').style.display = 'block';
+    }
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('authToken');
+      window.location.href = '/login.html';
+    });
+
+    // Load data on page load
+    loadProfile();
+    loadPostedJobs();
+    loadApplications();
+  </script>
+</body>
+</html>
